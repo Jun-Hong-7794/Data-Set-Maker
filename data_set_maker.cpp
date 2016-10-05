@@ -189,6 +189,10 @@ void Data_Set_Maker::Image_Crop(QPointF _top_left_point, QPointF _bottom_right_p
 
     m_crop_image = m_org_image(crop_roi);
 
+    QString image_size;
+    image_size = QString::number(m_crop_image.cols) + "X" + QString::number(m_crop_image.rows);
+    ui->ed_crop_size->setText(image_size);
+
     Display_Image(m_crop_image,mp_crop_qgraphic,ui->view_crop);
 }
 
