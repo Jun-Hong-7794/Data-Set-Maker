@@ -338,6 +338,13 @@ bool Data_Set_Maker::eventFilter(QObject *_obj, QEvent *_event){
 void Data_Set_Maker::keyPressEvent(QKeyEvent *_event){
 
 
+    if(_event->key() == Qt::Key_R){
+        if(ui->ck_save_org_img->isChecked())
+            ui->ck_save_org_img->setChecked(false);
+        else
+            ui->ck_save_org_img->setChecked(true);
+    }
+
     if(_event->key() == Qt::Key_A){
         if(fl_load_path){
             m_current_image_number--;
