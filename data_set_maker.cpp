@@ -187,6 +187,12 @@ void Data_Set_Maker::Image_Crop(QPointF _top_left_point, QPointF _bottom_right_p
     if(!Get_Crop_ROI(_top_left_point, _bottom_right_point,crop_roi))
         return;
 
+    if(m_org_image.cols <= crop_roi.x + crop_roi.width)
+        crop_roi.width = m_org_image.cols - crop_roi.x - 1;
+
+    if(m_org_image.rows <= crop_roi.y + crop_roi.height)
+        crop_roi.height = m_org_image.rows - crop_roi.y - 1;
+
     m_crop_image = m_org_image(crop_roi);
 
     QString image_size;
@@ -203,11 +209,25 @@ QPointF Data_Set_Maker::ViewPoint_To_ImagePoint(QPointF _view_point){
     int view_width = ui->view_original->geometry().width();
     int view_height = ui->view_original->geometry().height();
 
+    double view_h_w_ratio = (double)view_height / (double)view_width;
+
+    int image_width = m_org_image.cols;
+    int image_height = m_org_image.rows;
+
+    double image_h_w_ratio = (double)image_height / (double)image_width;
+
+    if(view_h_w_ratio < image_h_w_ratio){
+        view_width = (double)((view_width * view_h_w_ratio) / image_h_w_ratio);
+    }
+    else if(view_h_w_ratio > image_h_w_ratio){
+        view_height = (double)((view_height * image_h_w_ratio) / view_h_w_ratio);
+    }
+
     int img_point_x = 0;
     int img_point_y = 0;
 
-    img_point_x = (int)(((double)(_view_point.x()) / (double)(view_width)) * m_org_image.cols);
-    img_point_y = (int)(((double)(_view_point.y()) / (double)(view_height)) * m_org_image.rows);
+    img_point_x = (int)(((double)(_view_point.x()) / (double)(view_width)) * image_width);
+    img_point_y = (int)(((double)(_view_point.y()) / (double)(view_height)) * image_height);
 
     image_point.setX(img_point_x);
     image_point.setY(img_point_y);
