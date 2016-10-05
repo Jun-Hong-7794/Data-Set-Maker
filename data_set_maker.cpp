@@ -379,7 +379,7 @@ void Data_Set_Maker::keyPressEvent(QKeyEvent *_event){
 
     if(_event->key() == Qt::Key_3){
         if(ui->ck_save_path_3->isEnabled()){
-            if(!Save_Image(ui->ed_save_path_4->text())){
+            if(!Save_Image(ui->ed_save_path_3->text())){
                 QMessageBox::information(this, tr("Save Image Error"), tr("Check Image or Path"));
                 return;
             }
@@ -393,6 +393,19 @@ void Data_Set_Maker::keyPressEvent(QKeyEvent *_event){
     if(_event->key() == Qt::Key_4){
         if(ui->ck_save_path_4->isEnabled()){
             if(!Save_Image(ui->ed_save_path_4->text())){
+                QMessageBox::information(this, tr("Save Image Error"), tr("Check Image or Path"));
+                return;
+            }
+        }
+        else{
+            QMessageBox::information(this, tr("Check the class"), tr("Check the class"));
+            return;
+        }
+    }
+
+    if(_event->key() == Qt::Key_5){
+        if(ui->ck_save_path_4->isEnabled()){
+            if(!Save_Image(ui->ed_save_path_5->text())){
                 QMessageBox::information(this, tr("Save Image Error"), tr("Check Image or Path"));
                 return;
             }
